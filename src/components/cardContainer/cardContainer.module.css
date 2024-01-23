@@ -1,0 +1,26 @@
+.cardHeroContainer {
+}
+
+.heading {
+  margin: 42px 0;
+  font-weight: 500;
+  font-size: 42px;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  width: 95%;
+  flex-wrap: wrap;
+  gap: 50px;
+  margin: auto;
+}
+
+.favFlow {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 50px;
+  margin: auto;
+}

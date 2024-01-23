@@ -1,0 +1,10 @@
+.headContainer {
+  width: 100dvw;
+  padding: 20px;
+  background-color: #000;
+  color: #fff;
+  font-weight: 600;
+  font-size: 30px;
+  margin: 0;
+  box-sizing: border-box;
+}

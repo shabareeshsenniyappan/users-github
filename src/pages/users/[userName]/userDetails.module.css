@@ -1,0 +1,142 @@
+.userDetailsHeroContainer {
+  width: 95dvw;
+  margin: auto;
+  position: relative;
+}
+
+.detailContainer {
+  margin: 20px 10px;
+  border-radius: 3px;
+  padding: 16px;
+  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
+}
+.detailContainerTabs {
+  margin: 20px 10px;
+  border-radius: 3px;
+  padding: 16px;
+  padding-bottom: 28px;
+  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
+}
+.imageContainer {
+  display: flex;
+  gap: 25px;
+  border-radius: 3px;
+}
+
+.imageQ {
+  width: 20%;
+  height: 28%;
+  border-radius: 2px;
+}
+
+.infoRightContainer {
+  width: 100%;
+  text-align: center;
+}
+
+.userName {
+  font-size: 42px;
+  letter-spacing: 0.3rem;
+  font-weight: 500;
+  margin: 40px;
+}
+
+.loginName {
+  font-size: 38px;
+  color: rgb(178, 179, 179);
+  letter-spacing: 0.3rem;
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+
+.smallInfocontainer {
+  display: flex;
+  gap: 5px;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+.iconBooster {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+.info {
+  margin-right: 25px;
+  font-size: 20px;
+}
+
+.heading {
+  font-size: 32px;
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+.wrapper {
+  margin: 12px;
+  font-size: 20px;
+  margin-bottom: 26px;
+  display: flex;
+}
+
+.wrapperInc {
+  margin: 12px;
+  font-size: 20px;
+  margin-bottom: 26px;
+  display: flex;
+}
+.bubbler {
+  margin: 12px;
+  background-color: #ffb3cc;
+  padding: 8px;
+  border-radius: 25px;
+}
+
+.cronk {
+  text-decoration: none;
+  font-size: 22px;
+}
+
+.cronkHead {
+  text-decoration: none;
+  font-size: 22px;
+  color: #000;
+  cursor: pointer;
+}
+@media (max-width: 800px) {
+  .imageContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .detailContainerTabs {
+    margin: 0;
+  }
+  .imageQ {
+    width: 100%;
+    height: 20%;
+  }
+  .userDetailsHeroContainer {
+    width: 100dvw;
+    margin: 0;
+  }
+  .detailContainer {
+    margin: 0;
+  }
+  .infoRightContainer {
+  }
+  .userName {
+    margin: 0;
+  }
+  .wrapperInc {
+    flex-direction: column;
+    gap: 25px;
+  }
+  .iconBooster {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+}

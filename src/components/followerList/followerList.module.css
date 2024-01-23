@@ -1,0 +1,35 @@
+.simpleList {
+  display: flex;
+  gap: 32px;
+  margin: 20px;
+  align-items: center;
+  border-bottom: 1px solid #dcdce4;
+  padding: 10px;
+  cursor: pointer;
+}
+.listImage {
+  border-radius: 25px;
+}
+.simpleListName {
+  font-size: 22px;
+  text-transform: capitalize;
+}
+.simpleListNameRep {
+  font-size: 22px;
+  text-transform: capitalize;
+  width: 20%;
+  overflow: hidden;
+}
+
+@media (max-width: 800px) {
+  .simpleListNameRep {
+    width: 30%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: left;
+  }
+  .simpleList {
+    flex-wrap: wrap;
+    overflow: hidden;
+  }
+}
