@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import toast, { Toaster } from "react-hot-toast";
 import { getUsers, getUsersNextScroll } from "@/services/apiServices";
+import { axiosConfig } from "@/config/axiosConfig";
 function Userlist() {
   const [users, setUsers] = useState([]);
   const [favUser, setFavUser] = useState([]);
@@ -14,10 +15,12 @@ function Userlist() {
   }, []);
 
   const getUsersNext = async () => {
-    await getUsersNextScroll(sincer).then((response) => {
-      setsincer((prev) => (prev += 10));
-      setUsers([...users, ...response?.data]);
-    });
+    await axiosConfig
+      .get(`/users?page=100&per_page=10&since=${sincer}`)
+      .then((response) => {
+        setsincer((prev) => (prev += 10));
+        setUsers([...users, ...response?.data]);
+      });
   };
   const notify = () => toast.success("Favouritie Added !!");
   const notifyUnFav = () => toast.error("Favouritie Removed !!");
@@ -33,6 +36,7 @@ function Userlist() {
     notify();
   };
 
+  console.log(sincer);
   return (
     <div>
       <Toaster />

@@ -10,7 +10,7 @@ export default function Home() {
       <div className={styles.contentHome}>
         <div className={styles.typo}> Get all the details of the Git users</div>
         <Link href={"/users"}>
-          <button className={styles.butExp}>Exlore Git-User</button>
+          <button className={styles.butExp}>Explore Git-User</button>
         </Link>
       </div>
     </div>
