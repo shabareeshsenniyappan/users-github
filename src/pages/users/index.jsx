@@ -5,22 +5,41 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import toast, { Toaster } from "react-hot-toast";
 import { getUsers, getUsersNextScroll } from "@/services/apiServices";
 import { axiosConfig } from "@/config/axiosConfig";
-function Userlist() {
-  const [users, setUsers] = useState([]);
+import { set } from "nprogress";
+
+export async function getServerSideProps() {
+  const res = await fetch("https://api.github.com/users?page=100&per_page=10", {
+    method: "GET",
+    headers: {
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+    },
+  }).then((resq) => resq.json());
+  return { props: { res } };
+}
+
+function Userlist(props) {
+  const [users, setUsers] = useState(props?.res);
   const [favUser, setFavUser] = useState([]);
   const [sincer, setsincer] = useState(10);
-
-  useEffect(() => {
-    getUsers().then((res) => setUsers(res?.data));
-  }, []);
 
   const getUsersNext = async () => {
     await axiosConfig
       .get(`/users?page=100&per_page=10&since=${sincer}`)
       .then((response) => {
         setsincer((prev) => (prev += 10));
-        setUsers([...users, ...response?.data]);
+        //to show only unique users
+        insertOnlyUniqeUsers(response?.data);
       });
+  };
+
+  const insertOnlyUniqeUsers = (user) => {
+    let tmp = [...users, ...user];
+    const uniqueObjects = tmp.filter(
+      (obj, index, self) => index === self.findIndex((t) => t.id === obj.id)
+    );
+    setUsers(uniqueObjects);
   };
   const notify = () => toast.success("Favouritie Added !!");
   const notifyUnFav = () => toast.error("Favouritie Removed !!");
@@ -36,7 +55,6 @@ function Userlist() {
     notify();
   };
 
-  console.log(sincer);
   return (
     <div>
       <Toaster />
@@ -50,7 +68,7 @@ function Userlist() {
         />
       )}
       <InfiniteScroll
-        dataLength={users.length} //This is important field to render the next data
+        dataLength={users?.length} //This is important field to render the next data
         next={getUsersNext}
         hasMore={true}
         loader={<Loading />}

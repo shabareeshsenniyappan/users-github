@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import style from "./userDetails.module.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -12,31 +12,47 @@ import TabsComponent from "@/components/tabs";
 import Loading from "@/components/loading";
 import Link from "next/link";
 
-function UserDetails() {
+export async function getServerSideProps(context) {
+  const { userName } = context.query;
+  let userDetailsLoading = true;
+  // const response = await axiosConfig.get(`/users/${userName}`);
+  const userDetails = await fetch(`https://api.github.com/users/${userName}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+    },
+  })
+    .then((resq) => {
+      userDetailsLoading = false;
+      return resq.json();
+    })
+    .catch(() => (userDetailsLoading = false));
+
+  //
+  const userFollowers = await fetch(
+    `https://api.github.com/users/${userName}/followers`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+      },
+    }
+  ).then((resq) => resq.json());
+  return { props: { userDetails, userDetailsLoading, userFollowers } };
+}
+
+function UserDetails({ userDetails, userDetailsLoading, userFollowers }) {
   const router = useRouter();
   const userName = router.query.userName;
-  const [detail, setDetail] = useState();
-  const [followers, setfollowers] = useState();
+  const [detail] = useState(userDetails);
+  const [followers] = useState(userFollowers);
   const [repo, setrepo] = useState();
-  const [loading, setloading] = useState(true);
-  const [tabloading, settabloading] = useState(true);
-
-  useEffect(() => {
-    if (userName) {
-      getUserDetail(userName)
-        .then((res) => {
-          setDetail(res?.data);
-          setloading(false);
-        })
-        .catch((err) => setloading(false));
-      getUserfollowers(userName)
-        .then((res) => {
-          setfollowers(res?.data);
-          settabloading(false);
-        })
-        .catch((err) => settabloading(false));
-    }
-  }, [userName]);
+  const [loading] = useState(userDetailsLoading);
+  const [tabloading, settabloading] = useState(false);
 
   const getRepoData = () => {
     getUserRepos(userName)
